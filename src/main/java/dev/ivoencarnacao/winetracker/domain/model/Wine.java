@@ -1,5 +1,6 @@
 package dev.ivoencarnacao.winetracker.domain.model;
 
+import dev.ivoencarnacao.winetracker.domain.vo.AlcoholByVolume;
 import dev.ivoencarnacao.winetracker.domain.vo.Brand;
 import dev.ivoencarnacao.winetracker.domain.vo.Color;
 import dev.ivoencarnacao.winetracker.domain.vo.WineType;
@@ -13,6 +14,7 @@ public class Wine {
   private Brand brand;
   private Color color;
 
+  private AlcoholByVolume abv;
 
 
 
