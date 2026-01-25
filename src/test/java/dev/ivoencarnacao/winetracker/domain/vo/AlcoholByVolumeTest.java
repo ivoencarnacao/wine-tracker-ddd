@@ -18,6 +18,13 @@ class AlcoholByVolumeTest {
   }
 
   @Test
+  void shouldAcceptMaximumValue() {
+    var abv = new AlcoholByVolume(30.0);
+
+    assertThat(abv.value()).isEqualTo(30.0);
+  }
+
+  @Test
   void shouldRejectNaNValue() {
 
     assertThatThrownBy(() -> new AlcoholByVolume(Double.NaN))
@@ -42,16 +49,41 @@ class AlcoholByVolumeTest {
   }
 
   @Test
-  void shouldRejectOutOfRangeValues() {
+  void shouldRejectZeroOrNegativeValues() {
+
     assertThatThrownBy(() -> new AlcoholByVolume(0.0))
         .isInstanceOf(DomainException.class)
         .extracting(e -> ((DomainException) e).code())
         .isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE);
 
+    assertThatThrownBy(() -> new AlcoholByVolume(-0.1))
+        .isInstanceOf(DomainException.class)
+        .extracting(e -> ((DomainException) e).code())
+        .isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE);
+
+  }
+
+  @Test
+  void shouldRejectValuesAboveMaximum() {
     assertThatThrownBy(() -> new AlcoholByVolume(30.000_000_1))
         .isInstanceOf(DomainException.class)
         .extracting(e -> ((DomainException) e).code())
         .isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE);
+
+  }
+
+  @Test
+  void shouldClassifyLowAndHighAlcoholCorrectly() {
+    assertThat(new AlcoholByVolume(7.9).isLowAlcohol()).isTrue();
+    assertThat(new AlcoholByVolume(8.0).isLowAlcohol()).isFalse();
+
+    assertThat(new AlcoholByVolume(14.9).isHighAlcohol()).isFalse();
+    assertThat(new AlcoholByVolume(15.0).isHighAlcohol()).isTrue();
+  }
+
+  @Test
+  void shouldFormatAsPercentVolume() {
+    assertThat(new AlcoholByVolume(12.5).toString()).isEqualTo("12.5% vol.");
   }
 
 }
