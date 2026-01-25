@@ -1,4 +1,4 @@
-package dev.ivoencarnacao.wine_tracker;
+package dev.ivoencarnacao.winetracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

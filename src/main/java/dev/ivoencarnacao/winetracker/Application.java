@@ -1,4 +1,4 @@
-package dev.ivoencarnacao.wine_tracker;
+package dev.ivoencarnacao.winetracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
