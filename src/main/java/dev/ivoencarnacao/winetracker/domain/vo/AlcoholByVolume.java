@@ -11,6 +11,7 @@ public record AlcoholByVolume(double value) {
   private static final double MAX_INCLUSIVE = 30.0;
 
   public AlcoholByVolume {
+
     if (Double.isNaN(value) || Double.isInfinite(value)) {
       throw new DomainException(
           DomainErrorCode.INVALID_ABV_VALUE,

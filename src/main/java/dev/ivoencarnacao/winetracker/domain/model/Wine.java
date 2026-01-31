@@ -1,5 +1,7 @@
 package dev.ivoencarnacao.winetracker.domain.model;
 
+import java.math.BigDecimal;
+
 import dev.ivoencarnacao.winetracker.domain.vo.AlcoholByVolume;
 import dev.ivoencarnacao.winetracker.domain.vo.Brand;
 import dev.ivoencarnacao.winetracker.domain.vo.Color;
@@ -13,6 +15,8 @@ public class Wine {
 
   private Brand brand;
   private Color color;
+
+  private BigDecimal bottleSize;
 
   private AlcoholByVolume abv;
 

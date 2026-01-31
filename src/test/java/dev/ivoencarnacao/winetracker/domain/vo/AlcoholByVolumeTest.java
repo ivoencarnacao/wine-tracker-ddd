@@ -13,63 +13,49 @@ class AlcoholByVolumeTest {
   @Test
   void shouldCreateWithValidValue() {
     var abv = new AlcoholByVolume(12.5);
-
     assertThat(abv.value()).isEqualTo(12.5);
   }
 
   @Test
   void shouldAcceptMaximumValue() {
     var abv = new AlcoholByVolume(30.0);
-
     assertThat(abv.value()).isEqualTo(30.0);
   }
 
   @Test
   void shouldRejectNaNValue() {
-
     assertThatThrownBy(() -> new AlcoholByVolume(Double.NaN))
-        .isInstanceOf(DomainException.class)
-        .extracting(e -> ((DomainException) e).code())
-        .isEqualTo(DomainErrorCode.INVALID_ABV_VALUE);
-
+        .isInstanceOfSatisfying(DomainException.class,
+            ex -> assertThat(ex.code()).isEqualTo(DomainErrorCode.INVALID_ABV_VALUE));
   }
 
   @Test
   void shouldRejectInfiniteValue() {
-
     assertThatThrownBy(() -> new AlcoholByVolume(Double.POSITIVE_INFINITY))
-        .isInstanceOf(DomainException.class)
-        .extracting(e -> ((DomainException) e).code())
-        .isEqualTo(DomainErrorCode.INVALID_ABV_VALUE);
+        .isInstanceOfSatisfying(DomainException.class,
+            ex -> assertThat(ex.code()).isEqualTo(DomainErrorCode.INVALID_ABV_VALUE));
 
     assertThatThrownBy(() -> new AlcoholByVolume(Double.NEGATIVE_INFINITY))
-        .isInstanceOf(DomainException.class)
-        .extracting(e -> ((DomainException) e).code())
-        .isEqualTo(DomainErrorCode.INVALID_ABV_VALUE);
+        .isInstanceOfSatisfying(DomainException.class,
+            ex -> assertThat(ex.code()).isEqualTo(DomainErrorCode.INVALID_ABV_VALUE));
   }
 
   @Test
   void shouldRejectZeroOrNegativeValues() {
-
     assertThatThrownBy(() -> new AlcoholByVolume(0.0))
-        .isInstanceOf(DomainException.class)
-        .extracting(e -> ((DomainException) e).code())
-        .isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE);
+        .isInstanceOfSatisfying(DomainException.class,
+            ex -> assertThat(ex.code()).isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE));
 
     assertThatThrownBy(() -> new AlcoholByVolume(-0.1))
-        .isInstanceOf(DomainException.class)
-        .extracting(e -> ((DomainException) e).code())
-        .isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE);
-
+        .isInstanceOfSatisfying(DomainException.class,
+            ex -> assertThat(ex.code()).isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE));
   }
 
   @Test
   void shouldRejectValuesAboveMaximum() {
     assertThatThrownBy(() -> new AlcoholByVolume(30.000_000_1))
-        .isInstanceOf(DomainException.class)
-        .extracting(e -> ((DomainException) e).code())
-        .isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE);
-
+        .isInstanceOfSatisfying(DomainException.class,
+            ex -> assertThat(ex.code()).isEqualTo(DomainErrorCode.ABV_OUT_OF_RANGE));
   }
 
   @Test
@@ -85,5 +71,4 @@ class AlcoholByVolumeTest {
   void shouldFormatAsPercentVolume() {
     assertThat(new AlcoholByVolume(12.5).toString()).isEqualTo("12.5% vol.");
   }
-
 }
